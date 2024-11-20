@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El rincón del Cine - Reserva</title>
+     <link rel="stylesheet" th:href="@{/styles/estilos.css}">
+</head>
+<body>
+    <div class="bas"><div class="Slogan"><div class="NomSitio"></div></div></div>
+    <div class="base">
+        <div class="cabecera"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+        <div class="subcabecera"><div class="CuentaAtrasTres"></div><p>&nbsp;Introduzca los datos</p></div>
+        <div class="cuerpo" th:style="|background-image: url(@{/img/means/fondo21-3.gif})|">
+			
+           <form class="Fdatares" name="Fdatareserva" 
+		   method="POST" th:action="@{/step3}" th:object="${reservation}">
+              <div class="mini-billboard-selected"><div>
+				 <div th:style="'background-image: url(' + @{/img/films/billboard/film} + ${sessionData.filmId} + '.jpg)'"></div></div></div>
+              <div class="DatPer" th:object="${client}">
+                <div><label>Nombre:</label>
+					<input type="text" th:field="*{nombre}" th:style="${nombreError} ? 'border-color: red;' : ''" />
+				</div>
+                <div>
+					<label>Apellidos:</label>
+					<input type="text" th:field="*{apellidos}" />
+				</div>
+				
+                <div>
+					<label>e-mail:</label>
+					<input type="email" th:field="*{email}" th:style="${emailError} ? 'border-color: red;' : ''" />
+				</div>
+                <div>
+					<label>Repetir e-mail:</label>
+					<input type="email" th:field="*{re_email}" th:style="${reEmailError} ? 'border-color: red;' : ''"/>
+				</div>
+				<div th:if="${notSameEmailError}" style="color: red;">* Los email deben coincidir.</div>
+              </div>
+              <div class="DatRes">
+                <div>
+					<label>Fecha:</label>
+					<input type="date" th:field="*{fecha}" min="2022-09-10" max="2022-12-01" th:style="${fechaError} ? 'border-color: red;' : ''" />
+				</div>
+                <div>
+					<label>Hora:</label>
+					<input type="time" th:field="*{hora}" th:style="${horaError} ? 'border-color: red;' : ''" list="popularHours" value="17:00" min="17:00" max="23:00" step="10800" />
+                    <datalist id="popularHours">
+                        <option value="17:00">
+                        <option value="20:00">
+                        <option value="23:00">
+                    </datalist>
+                </div>
+                    <div class="VerticalAling">
+						<label class="numentradas">Nº adultos:</label>
+						<input type="number" th:field="${sessionData.numeroAdultos}"  th:style="${adultosError} ? 'border-color: red;' : ''" list="popularHours"  min="1" max="60" value="1" step="1" /></div>  
+                    <div class="VerticalAling">
+						<label class="numentradas">Nº menores 12 años:</label>
+						<input type="number" th:field="${sessionData.numeroMenores}"  min="0" max="60" value="0" step="1"/></div>  
+              </div>
+              <div>
+                <div><a class="atrasbtn" th:href="@{step1}">&lt;&lt; Atras</a>
+					<a class="homebtn" th:href="@{index}">&nbsp;</a>
+					<input type="submit" value="Siguiente &gt;&gt;" /></div>
+              </div>
+			  <div th:if="${errorMessage}" style="color: red;">
+			  			    <p th:text="${errorMessage}"></p>
+			  			</div>
+            </form>
+        </div>
+        <div class="pie"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+    </div>
+</body>
+</html>
